@@ -1,0 +1,42 @@
+<div class='container'>
+  <u><h1 class='Howitworksh1 heading'> !Our Menu <span>Items!</span></h1></u>
+  <h2 class='Howitworksh1 heading'> !Vegan <span>Meals!</span></h2>
+  <div class='row topMeal'>
+        {{#each mealList.[0].meal}}
+            {{!-- {{#if mealList[0].category}} --}}
+            <div class='col-lg-4 col-md-6'>
+              <div class='topMealDiv'>
+                <img class='image' src={{imageUrl}} alt='bacon' />
+                <div class='Meal_content'>
+                  <h3>{{title}}</h3>
+                  <p><b>Ingredient</b>: {{includes}}</p>
+                  <p><b>Cooking Time</b>: {{cookingTime}} mins</p>
+                  <p><b>Description</b>: {{description}}</p>
+                  <p><span>${{price}}</span></p>
+                </div>
+              </div>
+            </div>
+            {{!-- {{/if}} --}}
+        {{/each}}
+    </div>
+    <h2 class='Howitworksh1 heading'> !Classic <span>Meals!</span></h2>
+  <div class='row topMeal'>
+        {{#each mealList.[1].meal}}
+            {{!-- {{#compare category "==" "Classic Meals"}} --}}
+            <div class='col-lg-4 col-md-6'>
+              <div class='topMealDiv'>
+                <img class='image' src={{imageUrl}} alt='bacon' />
+                <div class='Meal_content'>
+                  <h3>{{title}}</h3>
+                  <p><b>Ingredient</b>: {{includes}}</p>
+                  <p><b>Cooking Time</b>: {{cookingTime}} mins</p>
+                  <p><b>Description</b>: {{description}}</p>
+                  <p><span>${{price}}</span></p>
+                </div>
+              </div>
+            </div>
+            {{!-- {{/compare}} --}}
+        {{/each}}
+    </div>
+
+</div>
