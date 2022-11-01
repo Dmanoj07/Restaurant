@@ -71,7 +71,7 @@ app.post("/welcome", (req, res) => {
     let passedValidation = true;
     let validationMessages = {};
 
-    if (typeof firstName !== "string" || firstName.trim().length == 0) {
+    if (typeof firstName !== "string" || firstName.trim().length === 0) {
         // First name is not a string, or, first name is an empty string.
         passedValidation = false;
         validationMessages.firstName = "Enter a first name";
@@ -82,7 +82,7 @@ app.post("/welcome", (req, res) => {
         validationMessages.firstName = "The first name should be at least 2 characters long.";
     }
 
-    if (typeof lastName !== "string" || lastName.trim().length == 0) {
+    if (typeof lastName !== "string" || lastName.trim().length === 0) {
         // First name is not a string, or, first name is an empty string.
         passedValidation = false;
         validationMessages.lastName = "Enter a last name";
@@ -93,7 +93,7 @@ app.post("/welcome", (req, res) => {
         validationMessages.lastName = "The last name should be at least 2 characters long.";
     }
 
-    if (typeof email !== "string" || email.trim().length == 0) {
+    if (typeof email !== "string" || email.trim().length === 0) {
         // First name is not a string, or, first name is an empty string.
         passedValidation = false;
         validationMessages.email = "Enter email address";
@@ -127,7 +127,7 @@ app.post("/welcome", (req, res) => {
         sgMail.setApiKey("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");
 
         const msg = {
-            to: "123manojdhami@gmail.com", //email
+            to: email, //email
             from: "manoj123dhami@gmail.com",
             subject: "Contact Us Form Submission",
             html:
