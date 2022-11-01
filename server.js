@@ -124,7 +124,7 @@ app.post("/welcome", (req, res) => {
     if (passedValidation) {
         validationMessages = "Success, validation passed and email has been sent.";
         const sgMail = require("@sendgrid/mail");
-        sgMail.setApiKey("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");
+        sgMail.setApiKey("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");
 
         const msg = {
             to: "123manojdhami@gmail.com", //email
