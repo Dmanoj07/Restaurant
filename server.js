@@ -118,7 +118,7 @@ app.post("/welcome", (req, res) => {
     else if (!regularExpression.test(password) ) {
         // First name is not a string, or, first name is only a single character.
         passedValidation = false;
-        validationMessages.password = "password should contain atleast one number and one special character";
+        validationMessages.password = "password should contain atleast one number, one uppercase letter, one lowercase letter and one special character";
     }
 
     if (passedValidation) {
@@ -142,7 +142,7 @@ app.post("/welcome", (req, res) => {
                 res.render("general/welcome", {
                     title: "Sign UP",
                     values: req.body,
-                    validationMessages
+                    validationMessages,
                 });
                 //res.send("Success, validation passed and email has been sent.");
             })
