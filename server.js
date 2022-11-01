@@ -17,8 +17,7 @@ const exphbs = require('express-handlebars');
 const meals = require("./models/mealkit-db");
 
 // Set up dotenv
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/keys.env" });
+require("dotenv").config();
 
 //set up handlebars
 const app = express();
@@ -124,7 +123,7 @@ app.post("/welcome", (req, res) => {
     if (passedValidation) {
         validationMessages = "Success, validation passed and email has been sent.";
         const sgMail = require("@sendgrid/mail");
-        sgMail.setApiKey("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");
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         const msg = {
             to: email, //email
