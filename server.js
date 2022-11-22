@@ -14,211 +14,70 @@
 const path = require("path");
 const express = require("express");
 const exphbs = require('express-handlebars');
-const meals = require("./models/mealkit-db");
-
+// const meals = require("./models/mealkit-db");
+const mongoose = require("mongoose");
 // Set up dotenv
-require("dotenv").config();
+const dotenv = require("dotenv");
+const session = require("express-session");
+
+dotenv.config({ path: "./config/keys.env" });
 
 //set up handlebars
 const app = express();
 app.engine('.hbs', exphbs.engine({
     extname: '.hbs',
-    defaultLayout:"main"
+    defaultLayout: "main"
 }));
 app.set('view engine', '.hbs');
 
 // Set up body-parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+
+
+// Set up express-session
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use((req, res, next) => {
+    // res.locals.user is a global handlebars variable.
+    // This means that every single handlebars file can access this variable.
+    res.locals.user = req.session.user;
+    // res.locals.isclerk = res.session.isclerk;
+    next();
+});
+
+//connect to the mongoDb
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => {
+        console.log("connected to mongoDb.");
+    })
+    .catch(err => {
+        console.log(`There was a problem connected to mongoDb....${err}`);
+    });
+
 
 // Add your routes here
 // e.g. app.get() { ... }
 //middleware for css
 app.use(express.static("assets"));
 
-// old route
-app.get("/", (req,res) =>{
-   
-    res.render("general/index.hbs", {
-        mealList: meals.getTopMealkits(),
-        title: "Home Page"
-    });
-});
-app.get("/onthemenus", (req,res) =>{
-    res.render("general/onthemenus",
-    {
-        mealList: meals.getMealkitsByCategory(),
-        title: "Menu Page"
-    });
-});
-app.get("/signup", (req,res) =>{
-    res.render("general/signup");
-});
-app.get("/login", (req,res) =>{
-    res.render("general/login");
-});
+//Set up Controllers
+const generalController = require("./controllers/generalController");
+const userController = require("./controllers/userController");
+const clerkController = require("./controllers/clerk");
+const customerController = require("./controllers/customer");
 
 
-
-
-//validation for registration and login
-var regularExpression = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-var emailregexerp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-app.post("/welcome", (req, res) => {
-    console.log(req.body);
-    const { firstName, lastName, email, password } = req.body;
-
-    let passedValidation = true;
-    let validationMessages = {};
-
-    if (typeof firstName !== "string" || firstName.trim().length === 0) {
-        // First name is not a string, or, first name is an empty string.
-        passedValidation = false;
-        validationMessages.firstName = "Enter a first name";
-    }
-    else if (typeof firstName !== "string" || firstName.trim().length <= 2) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.firstName = "The first name should be at least 2 characters long.";
-    }
-
-    if (typeof lastName !== "string" || lastName.trim().length === 0) {
-        // First name is not a string, or, first name is an empty string.
-        passedValidation = false;
-        validationMessages.lastName = "Enter a last name";
-    }
-    else if (typeof lastName !== "string" || lastName.trim().length <= 2) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.lastName = "The last name should be at least 2 characters long.";
-    }
-
-    if (typeof email !== "string" || email.trim().length === 0) {
-        // First name is not a string, or, first name is an empty string.
-        passedValidation = false;
-        validationMessages.email = "Enter email address";
-    }
-    else if (typeof email !== "string" || !emailregexerp.test(email)) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.email = "Enter Valid email address";
-    }
-
-    if ( password.trim().length == 0) {
-        // First name is not a string, or, first name is an empty string.
-        passedValidation = false;
-        validationMessages.password = "Enter a password";
-    }
-    else if (password.trim().length < 8 ) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.password = "The password should be at least 8 characters long.";
-    }
-
-    else if (!regularExpression.test(password) ) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.password = "password should contain atleast one number, one uppercase letter, one lowercase letter and one special character";
-    }
-
-    if (passedValidation) {
-        validationMessages = "Success, validation passed and email has been sent.";
-        const sgMail = require("@sendgrid/mail");
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-        const msg = {
-            to: email, //email
-            from: "manoj123dhami@gmail.com",
-            subject: "Contact Us Form Submission",
-            html:
-                `Thank You ${firstName} ${lastName} For Registration :) <br>
-                 - Manoj Dhami <br>
-                 - BreakFast.com<br>
-                `
-        };
-
-        sgMail.send(msg)
-            .then(() => {
-                res.render("general/welcome", {
-                    title: "Sign UP",
-                    values: req.body,
-                    validationMessages,
-                });
-                //res.send("Success, validation passed and email has been sent.");
-            })
-            .catch(err => {
-                console.log(err);
-
-                res.render("general/welcome", {
-                    title: "Welcome",
-                    values: req.body,
-                    validationMessages
-                });
-            });
-
-    }
-    else {
-        res.render("general/signup", {
-            title: "Sign UP",
-            values: req.body,
-            validationMessages
-        });
-    }
-
-});
-
-app.post("/index", (req, res) => {
-    console.log(req.body);
-    const { email, password } = req.body;
-
-    let passedValidation = true;
-    let validationMessages = {};
-
-    if (typeof email !== "string" || email.trim().length == 0) {
-        // First name is not a string, or, first name is an empty string.
-        passedValidation = false;
-        validationMessages.email = "Enter email address";
-    }
-    else if (typeof email !== "string" || !emailregexerp.test(email)) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.email = "Enter Valid email address";
-    }
-
-    if ( password.trim().length == 0) {
-        // First name is not a string, or, first name is an empty string.
-        passedValidation = false;
-        validationMessages.password = "You must set a password";
-    }
-    else if (password.trim().length < 8 ) {
-        // First name is not a string, or, first name is only a single character.
-        passedValidation = false;
-        validationMessages.password = "The password should be at least 8 characters long.";
-    }
-
-    else if (!regularExpression.test(password) ) {
-        passedValidation = false;
-        validationMessages.password = "password should contain atleast one number, one uppercase letter, one lowercase letter and one special character";
-    }
-
-
-    if (passedValidation) {
-        res.render("general/", {
-            title: "Login",
-            values: req.body,
-            validationMessages
-        });
-
-    }
-    else {
-        res.render("general/login", {
-            title: "Login",
-            values: req.body,
-            validationMessages
-        });
-    }
-
-});
-
+app.use("/", generalController);
+app.use("/user/", userController);
+app.use("/customer/", customerController);
+app.use("/clerk/", clerkController);
 
 
 
@@ -249,7 +108,7 @@ const HTTP_PORT = process.env.PORT || 8080;
 function onHttpStart() {
     console.log("Express http server listening on: " + HTTP_PORT);
 }
-  
+
 // Listen on port 8080. The default port for http is 80, https is 443. We use 8080 here
 // because sometimes port 80 is in use by other applications on the machine
 app.listen(HTTP_PORT, onHttpStart);

@@ -24,7 +24,7 @@
     <!-- navigation -->
     <header>
       <div class='container'>
-        <nav class='navbar navbar-expand-lg navbar-light bg-light  navThick'>
+        <nav class='navbar navbar-expand-lg navbar-light bg-light navThick'>
           <a class='navbar-brand logo' href='/'><i
               class='fas fa-utensils'
             ></i>BREAKF<span>ast.</span>
@@ -49,12 +49,23 @@
               <li class='nav-item'>
                 <a class='nav-link' href='/onthemenus'>On the Menu</a>
               </li>
-              <li class='nav-item'>
-                <a class='nav-link' href='/signup'>Sign-up</a>
-              </li>
-              <li class='nav-item'>
-                <a class='nav-link' href='/login'>Login</a>
-              </li>
+              {{#if user}}
+                <li class='nav-item'><a class='nav-link' href='/user/login'>
+                    Hi
+                    {{user.firstName}}
+                    {{user.lastName}}
+                  </a></li>
+                <li class='nav-item'>
+                  <a class='nav-link' href='/user/logout'>logout</a>
+                </li>
+              {{else}}
+                <li class='nav-item'>
+                  <a class='nav-link' href='/user/signup'>Sign-up</a>
+                </li>
+                <li class='nav-item'>
+                  <a class='nav-link' href='/user/login'>Login</a>
+                </li>
+              {{/if}}
             </ul>
           </div>
         </nav>

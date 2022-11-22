@@ -104,23 +104,19 @@ module.exports.getTopMealkits = function(){
     return mealData;
 }
 module.exports.getMealkitsByCategory = function(){
-    console.log("inside");
     var filtered = [{category:"",
     meal:[]},{category:"",
     meal:[]}];
     for(var i=0; i<mealData.length; i++){
-        console.log("inside1");
         if(mealData[i].category ==="Vegan Meals"){
             filtered[0].category = mealData[i].category;
 
             filtered[0].meal.push(mealData[i]);
-            console.log("inside2");
         }
         else{
             filtered[1].category = mealData[i].category;
 
             filtered[1].meal.push(mealData[i]);
-            console.log("inside3");
         }
     }
     return filtered;

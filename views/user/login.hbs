@@ -1,0 +1,88 @@
+<!-- Hero section -->
+<section class='vh-100'>
+  <div class='align-items-center h-100'>
+    <div class='container h-100'>
+      <div class='row d-flex justify-content-center align-items-center h-100'>
+        <div class='col-12 col-md-9 col-lg-7 col-xl-6'>
+
+          <p class='errorMessage'> {{validationMessages.errorMsg}} </p>
+          {{!-- <p class='signupSuccs'> {{req.session.signUpSucess}} </p> --}}
+          <div class='card' style='border-radius: 15px;'>
+            <div class='card-body p-5'>
+              <h2 class='text-center mb-5'>! Welcome <span>Back !</span> </h2>
+              <form method='post' action='/user/login'>
+
+                <div class='form-outline mb-4'>
+                  <input
+                    type='text'
+                    class='form-control form-control-lg'
+                    name='email'
+                  />
+                  <label>Your Email</label>
+                  {{#if validationMessages.email}}
+                    <span
+                      style='color: red;'
+                    >{{validationMessages.email}}</span><br />
+                  {{/if}}
+                </div>
+
+                <div class='form-outline mb-4'>
+                  <input
+                    type='password'
+                    class='form-control form-control-lg'
+                    name='password'
+                  />
+                  <label>Password</label>
+                  {{#if validationMessages.password}}
+                    <span
+                      style='color: red;'
+                    >{{validationMessages.password}}</span><br />
+                  {{/if}}
+                </div>
+                <div class='form-outline mb-4'>
+                  <label>User Type</label>
+                </div>
+
+                <div class='form-check form-check-inline'>
+                  <input
+                    class='form-check-input'
+                    type='radio'
+                    checked
+                    name='radOpt'
+                    id='inlineRadio1'
+                    value='customer'
+                  />
+                  <label
+                    class='form-check-label'
+                    for='inlineRadio1'
+                  >Customer</label>
+                </div>
+                <div class='form-check form-check-inline'>
+                  <input
+                    class='form-check-input'
+                    type='radio'
+                    name='radOpt'
+                    id='inlineRadio2'
+                    value='clerk'
+                  />
+                  <label
+                    class='form-check-label'
+                    for='inlineRadio2'
+                  >Clerk</label>
+                </div>
+
+                <div class='justify-content-center'>
+                  <input
+                    type='submit'
+                    class='btn btn-success btn-block btn-lg'
+                  />
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
