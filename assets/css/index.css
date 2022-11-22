@@ -40,7 +40,7 @@ header {
   padding: 1rem;
   color: rgb(0, 0, 0);
 }
- span {
+span {
   color: #04aa6d;
 }
 .btn {
@@ -148,7 +148,7 @@ header nav a:hover {
 
 /* top meal section  */
 
-.topMeal .topMealDiv{
+.topMeal .topMealDiv {
   box-shadow: 1rem solid rgba(0, 0, 0, 0.1);
   border: 0.1rem solid rgba(0, 0, 0, 0.3);
   cursor: pointer;
@@ -170,13 +170,14 @@ header nav a:hover {
   color: #666;
   margin: 0;
 }
-.topMeal_content h3, span{
+.topMeal_content h3,
+span {
   font-weight: 600;
   text-align: center;
 }
 
 /* MealKit */
-.Meal_content{
+.Meal_content {
   background: #fff;
   padding-left: 10px;
   margin-top: 10px;
@@ -188,19 +189,18 @@ header nav a:hover {
   margin: 0;
   padding: 0 0 5px;
 }
-.Meal_content h3, span{
+.Meal_content h3,
+span {
   font-weight: 600;
   text-align: center;
 }
 
-
 /* Form */
 
-label, p{
+label,
+p {
   font-size: large;
 }
-
-
 
 /* footer css  */
 ul {
@@ -275,7 +275,6 @@ ul {
   border-top: 1px solid gray;
 }
 
-
 .footer .media .fa-brands:hover {
   opacity: 0.7;
 }
@@ -293,4 +292,15 @@ ul {
     max-width: 1380px !important;
     min-width: 85%;
   }
+}
+
+.errorMessage {
+  text-align: center;
+  color: red;
+  font-weight: 600;
+}
+.signupSuccs {
+  text-align: center;
+  color: green;
+  font-weight: 600;
 }
