@@ -139,7 +139,7 @@ router.post("/signup", (req, res) => {
 
 
 router.get("/login", (req, res) => {
-    if (req.session.user) {
+    if (req.session.user) { //checking for user session
         if (req.session.user.isclerk) {
             res.redirect('/clerk/list-mealkits');
             return;
