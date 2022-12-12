@@ -11,7 +11,6 @@
 **************************************************************************************/
 
 
-const path = require("path");
 const express = require("express");
 const exphbs = require('express-handlebars');
 // const meals = require("./models/mealkit-db");
@@ -19,10 +18,11 @@ const mongoose = require("mongoose");
 // Set up dotenv
 const dotenv = require("dotenv");
 const session = require("express-session");
+const fileUpload = require("express-fileupload");
 
 dotenv.config({ path: "./config/keys.env" });
 
-//set up handlebars
+//set up handlebarsnode 
 const app = express();
 app.engine('.hbs', exphbs.engine({
     extname: '.hbs',
@@ -30,9 +30,17 @@ app.engine('.hbs', exphbs.engine({
 }));
 app.set('view engine', '.hbs');
 
+var hbs = exphbs.create({});
+hbs.handlebars.registerHelper('ifeq', function (a, b, options) {
+    if (a === b) { return options.fn(this); }
+    return options.inverse(this);
+});
+
 // Set up body-parser
 app.use(express.urlencoded({ extended: true }));
 
+// Set up express-upload
+app.use(fileUpload());
 
 // Set up express-session
 app.use(session({
@@ -66,18 +74,23 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING,
 // e.g. app.get() { ... }
 //middleware for css
 app.use(express.static("assets"));
+app.use('/js', express.static(__dirname + "/assets/js/"));
+
 
 //Set up Controllers
 const generalController = require("./controllers/generalController");
 const userController = require("./controllers/userController");
 const clerkController = require("./controllers/clerk");
 const customerController = require("./controllers/customer");
-
+const loadDataController = require("./controllers/load-data");
+const mealController = require("./controllers/mealController");
 
 app.use("/", generalController);
 app.use("/user/", userController);
 app.use("/customer/", customerController);
 app.use("/clerk/", clerkController);
+app.use("/load-data/", loadDataController);
+app.use("/meals/", mealController);
 
 
 
