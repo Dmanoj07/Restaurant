@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         required: false
     },
+    userCart: {
+        type: Array,
+        required: false
+    },
     dateCreated: {
         type: Date,
         default: Date.now()
@@ -52,7 +56,7 @@ userSchema.pre("save", function (next) {
         .catch(err => {
             console.log(`Error occurred when salting ...${err}`)
         });
-})
+});
 
 const userModel = mongoose.model("users", userSchema)
 module.exports = userModel;
