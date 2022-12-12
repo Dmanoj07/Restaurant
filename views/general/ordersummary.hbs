@@ -1,10 +1,9 @@
 <div class='container'>
   <br /><br />
-  <h2>Welcome, <span class='welcomeName'> {{user.firstName}}!</span></h2>
+  <h2>Hi, <span class='welcomeName'> {{user.firstName}}!</span></h2>
   <br /><br />
 
-  <h4> Shopping Cart</h4>
-  <p class='itmsnumCart'>({{itmsnumCart}}) items in cart</p>
+  <h4> Here's your order summary. An email for confirmation has been sent.</h4>
   <br />
   {{#if hasDat}}
     <div class='tableContainer'>
@@ -14,7 +13,6 @@
             <th scope='col'>#</th>
             <th scope='col'>Title</th>
             <th scope='col'>Price</th>
-            <th scope='col'>Image</th>
             <th scope='col'>Quantity</th>
             <th scope='col'>Total price</th>
 
@@ -26,20 +24,11 @@
               <th>{{@index}}</th>
               <td>{{title}}</td>
               <td>{{price}}</td>
-              <td><img class='tableimg tableimg2' src='{{imageUrl}}' /></td>
               <td class='quantityRowTb'>
-                <p class='quantChange quantChange1'>-</p>
                 <p class='qVals'>{{quantity}} </p>
-                <p class='quantChange quantChange2'>+</p>
-                <div>
-                  <a
-                    href='/customer/updateCart/:{{prodId}}/:{{quantity}}'
-                    class='loadDtBtn hideIt'
-                  >Update</a>
-                </div>
+
               </td>
               <td>{{totalPrice}}</td>
-
             </tr>
           {{/each}}
         </tbody>
@@ -51,7 +40,7 @@
       Total:
       <span class='colredd'> ${{totalOverallCost}}</span>
     </p>
-    <a href='/customer/checkout' class='loadDtBtn addCartBtn'>Proceed to checkout</a>
+    <a href='/customer/cart' class='loadDtBtn addCartBtn'>Return Home</a>
   {{else}}
     <br />
     <br />
@@ -64,5 +53,5 @@
       <div class='loader'></div>
     </div>
   </div>
-  <script src='/js/script.js'></script>
+  <script src='/js/showLoad.js'></script>
 </div>

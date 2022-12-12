@@ -1,8 +1,77 @@
 <div class='container'>
   <br /><br />
-  <h2>Welcome! {{user.firstName}}</h2>
+  <h2>Welcome, <span class='welcomeName'> {{user.firstName}}!</span></h2>
   <br /><br />
   <h4> Dashboard</h4><br />
-  <p> This is the dashboard for clerk to implement.</p>
+  <br />
+  <br />
+
+  <a class='loadDtBtn' href='/load-data/meal-kits'>Load Data</a>
+  <a class='loadDtBtn' href='/clerk/add-mealkit'>Add Mealkit</a>
+  <br />
+  <br />
+
+  {{! user controls  }}
+  <br />
+  <h4><b>List of meal kits:</b></h4>
+  <div class='tableContainer'>
+    <table class='table table-sm table-bordered'>
+      <thead class='thead-dark'>
+        <tr>
+          <th scope='col'>#</th>
+          <th scope='col'>Title</th>
+          <th scope='col'>Includes</th>
+          <th scope='col'>Description</th>
+          <th scope='col'>Category</th>
+          <th scope='col'>Price</th>
+          <th scope='col'>CookingTime</th>
+          <th scope='col'>Serving</th>
+          <th scope='col'>Image</th>
+          <th scope='col'>TopMeals</th>
+          <th scope='col'>Edit</th>
+          <th scope='col'>Del</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {{#each docs}}
+          <tr>
+            <th>{{@index}}</th>
+            <td>{{title}}</td>
+            <td>{{includes}}</td>
+            <td>{{description}}</td>
+            <td>{{category}}</td>
+            <td>{{price}}</td>
+            <td>{{cookingTime}} mins</td>
+            <td>{{servings}}</td>
+            <td><img class='tableimg' src='{{imageUrl}}' /></td>
+            <td>{{topMeal}}</td>
+            <td class='toEdit'><a
+                class='toEdit'
+                href='/clerk/edit-mealkit/:{{_id}}'
+              >Edit</a></td>
+            <td class='toDel'><a
+                class='toDel'
+                href='/clerk/remove-mealkit/:{{_id}}'
+              >Del</a></td>
+
+            {{! <td className='clickIcon'>pick </td> }}
+          </tr>
+        {{/each}}
+        {{! {allCandidates.map((cx, i) => {
+                    return (
+
+                    );
+                  })} }}
+      </tbody>
+
+    </table>
+  </div>
+
+  <br />
+  <br />
+  <br />
+  <br />
+
   <br /><br />
 </div>

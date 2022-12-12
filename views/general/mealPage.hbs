@@ -1,0 +1,33 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class='centerImgml'>
+        <img src={{item.imageUrl}} alt='food' />
+      </div>
+    </div>
+    <div class='col-md-6 rightSideDesp'>
+      <h1 class='h1diffFont'><b>{{item.title}}</b></h1>
+      <h4>{{item.includes}}</h4>
+      <h3>{{item.description}}</h3>
+      <div class='myRowx'>
+        <div class='myRwItm myRwItm1'>
+          <p>Cooking Time</p>
+          <h5>{{item.cookingTime}} minutes</h5>
+        </div>
+        <div class='myRwItm myRwItm2'>
+          <p>Servings</p>
+          <h5>{{item.servings}}</h5>
+        </div>
+      </div>
+      <div class='itmxprice'>Price: ${{item.price}}</div>
+      <a href='/meals/buy/:{{item._id}}' class='addCartBtn'>Add to Cart</a>
+    </div>
+  </div>
+  <div class='LoadingAction'>
+    <div class='sendtoMid'>
+      <div class='loader'></div>
+    </div>
+  </div>
+  <script src='/js/showLoad.js'></script>
+
+</div>

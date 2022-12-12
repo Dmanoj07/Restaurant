@@ -1,0 +1,73 @@
+<div class='container'>
+  <form
+    class='myForm'
+    method='post'
+    action='add-mealkit'
+    enctype='multipart/form-data'
+  >
+    <div><p>Title</p><input
+        type='text'
+        name='title'
+        placeholder='title'
+        value='{{data.title}}'
+      /></div>
+    <div><p>Includes</p>
+      <input
+        type='text'
+        class='fullInputLen'
+        name='includes'
+        placeholder='includes'
+        value='{{data.includes}}'
+      /></div>
+    <div><p>Description</p>
+      <input
+        type='text'
+        class='fullInputLen'
+        name='description'
+        placeholder='description'
+        value='{{data.description}}'
+      /></div>
+    <div><p>Category</p><input
+        type='text'
+        placeholder='category'
+        name='category'
+        value='{{data.category}}'
+      /></div>
+    <div><p>Price</p><input
+        type='number'
+        name='price'
+        placeholder='price'
+        value='{{data.price}}'
+      /></div>
+    <div><p>Cooking Time</p><input
+        type='number'
+        name='cookingTime'
+        placeholder='cooking time'
+        value='{{data.cookingTime}}'
+      /></div>
+    <div><p>Servings</p><input
+        type='number'
+        name='servings'
+        placeholder='servings'
+        value='{{data.servings}}'
+      /></div>
+    <div><p>TopMeal</p><input
+        type='checkbox'
+        name='topMeal'
+        {{#if data.topMeal}}
+        checked
+        {{/if}}
+      /></div>
+
+    {{! hidden input to determine whether the form is for update or adding new  }}
+    <input
+      style='display: none;'
+      type='text'
+      name='hiddenText'
+      value='{{data.update}}'
+    />
+    <div><p>Upload Image</p><input type='file' name='imageUrl' /></div>
+    <button type='submit'>{{data.buttonName}}</button>
+
+  </form>
+</div>

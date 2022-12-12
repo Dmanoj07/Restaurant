@@ -1,0 +1,20 @@
+<div class='container loadDtStCont'>
+  <h5 class='statusCls'> Status: </h5>
+  {{#ifeq status 'success'}}
+    <p class='dbStatus'> Mealkit data added successfully.</p>
+  {{/ifeq}}
+
+  {{#ifeq status 'dberror'}}
+    <p class='dbStatus'> Error in accessing database.</p>
+  {{/ifeq}}
+
+  {{#ifeq status 'present'}}
+    <p class='dbStatus'> Mealkit data already present in database.</p>
+  {{/ifeq}}
+
+  {{#ifeq status 'unauthorized'}}
+    <p class='dbStatus unauthorizedContainer'>
+      You are not authorized to add meal kits.</p>
+  {{/ifeq}}
+  <a class='loadDtBtn' href='/clerk/list-mealkits'>Go Back</a>
+</div>
